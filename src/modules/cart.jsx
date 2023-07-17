@@ -4,7 +4,8 @@ export default class Cart extends Component {
   render() {
     const { displayCart,closeCart,productDetail ,gioHang} = this.props;
     console.log("SP chọn ", productDetail);
-    
+    let totalPrice =0;
+
     return (
         <div className="modal-cart"
         style={{
@@ -30,6 +31,7 @@ export default class Cart extends Component {
                     <tbody className='table'>
                         {
                             gioHang.map((sp,index)=>{
+                                totalPrice += sp.soLuong * sp.price;
                                 return (
                                     <tr key={index}>
                                     <td>{sp.id}</td>
@@ -48,7 +50,7 @@ export default class Cart extends Component {
                                         }}>{sp.soLuong}</span>
                                         <button className='btn btn-success'>-</button>
                                     </td>
-                                    <td>{sp.soLuong * sp.price}</td>
+                                    <td>{sp.soLuong * sp.price}$</td>
                                     <td>
                                         <button className='btn btn-danger'>Xóa</button>
                                     </td>
@@ -61,7 +63,8 @@ export default class Cart extends Component {
             </div>
             <div className="cart-content-bot">
                 <div className="sub-total">
-                <p style={{fontSize: 30}}>Tạm tính: <span id="totalPrice" style={{marginRight: 10}} />$</p>
+                <p style={{fontSize: 30,}}>Tạm tính: <span style={{
+                    color:"red", marginLeft:"5px", fontSize: 30}}> {totalPrice}</span> <span id="totalPrice" style={{marginRight: 10}} />$</p>
                 </div>
                 <div className="gr-button">
                 <a href="#list-product" className="hide" onclick="continueShopping()" style={{transitionDuration: '2s'}}>
