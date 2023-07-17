@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 
 export default class Cart extends Component {
   render() {
-    const { displayCart,closeCart,productDetail} = this.props;
+    const { displayCart,closeCart,productDetail ,gioHang} = this.props;
     console.log("SP chọn ", productDetail);
+    
     return (
         <div className="modal-cart"
         style={{
@@ -16,6 +17,47 @@ export default class Cart extends Component {
             </button>
             <div className="wrap-cart-content">
             <div className="list-items" id="showCart">
+                <table className='table text-center ' >
+                    <thead>
+                        <tr>
+                            <th>Mã sản phẩm</th>
+                            <th>Hình ảnh</th>
+                            <th>Số lượng</th>
+                            <th>Giá</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody className='table'>
+                        {
+                            gioHang.map((sp,index)=>{
+                                return (
+                                    <tr key={index}>
+                                    <td>{sp.id}</td>
+                                    <td>
+                                        <img style={{
+                                            width: 120,
+                                            height: 110,
+                                            
+                                        }} src={sp.image} />
+                                    </td>
+                                    <td>
+                                        <button className='btn btn-success'>+</button>
+                                        <span style={{
+                                            fontSize: 24,
+                                            margin: "0 10px",
+                                        }}>{sp.soLuong}</span>
+                                        <button className='btn btn-success'>-</button>
+                                    </td>
+                                    <td>{sp.soLuong * sp.price}</td>
+                                    <td>
+                                        <button className='btn btn-danger'>Xóa</button>
+                                    </td>
+                                </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
             </div>
             <div className="cart-content-bot">
                 <div className="sub-total">
