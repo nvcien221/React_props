@@ -145,19 +145,7 @@ export default class ShoesStore extends Component {
     displayCart : false,
     displayModal: false,
     productDetail: null,
-    gioHang : [
-      {
-      soLuong : 1,
-      id: 12,
-      name: "Nike Air Max 270 React",
-      alias: "nike-air-max-270-react",
-      price: 750,
-      description: "Nike shoe is the rare high-percentage shooter who's also a coach's dream on D. Designed for his unrivaled 2-way game, the PG 4 unveils a new cushioning system that's lightweight, articulated and responsive, ideal for players like PG who go hard every play.\r\n\r\n",
-      shortDescription: "Paul George is the rare high-percentage shooter",
-      quantity: 445,
-      image: "http://svcy3.myclass.vn/images/nike-air-max-270-react.png"
-      }
-    ]
+    gioHang : [],
   };
 
 
@@ -236,6 +224,43 @@ export default class ShoesStore extends Component {
   };
 
 
+  changeQuantity = ({ quantity, id }) => {
+    const { gioHang } = this.state;
+    const index = gioHang.findIndex((item) => item.id === id);
+  
+    if (index !== -1) {
+      const newGioHang = [...gioHang];
+      const sanPham = newGioHang[index];
+      if (sanPham.soLuong === 1 && quantity === -1) {
+        if(window.confirm("Bạn có chắc chắn muốn xóa hay không!")){
+          newGioHang.splice(index, 1);
+        }
+
+      } else {
+        sanPham.soLuong += quantity;
+      }
+      this.setState({
+        gioHang: newGioHang,
+      });
+    }
+  
+    this.setState({
+      productDetail: null,
+      displayCart: true,
+    });
+  };
+
+  deleteSP = (id)=>{
+    const { gioHang } = this.state;
+    const index = gioHang.findIndex((item) => item.id === id);
+    gioHang.splice(index,1);
+    console.log(gioHang);
+    this.setState({
+      gioHang : [...gioHang],
+    })
+  }
+
+
 
   render() {
     return (
@@ -260,6 +285,8 @@ export default class ShoesStore extends Component {
         setStateCart = {this.setStateCart}
         productDetail={this.state.productDetail}
         gioHang = {this.state.gioHang}
+        changeQuantity = {this.changeQuantity}
+        deleteSP = {this.deleteSP}
         />
       </>
     )

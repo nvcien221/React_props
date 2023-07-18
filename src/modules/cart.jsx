@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default class Cart extends Component {
   render() {
-    const { displayCart,closeCart,productDetail ,gioHang} = this.props;
+    const { displayCart,closeCart,productDetail ,gioHang, changeQuantity, deleteSP} = this.props;
     console.log("SP chọn ", productDetail);
     let totalPrice =0;
 
@@ -43,16 +43,33 @@ export default class Cart extends Component {
                                         }} src={sp.image} />
                                     </td>
                                     <td>
-                                        <button className='btn btn-success'>+</button>
+                                        <button 
+                                        onClick={()=>{
+                                            changeQuantity({
+                                                quantity : 1,
+                                                id: sp.id,
+                                            })
+                                        }}
+                                        className='btn btn-success'>+</button>
                                         <span style={{
                                             fontSize: 24,
                                             margin: "0 10px",
                                         }}>{sp.soLuong}</span>
-                                        <button className='btn btn-success'>-</button>
+                                        <button                                                                            onClick={()=>{
+                                            changeQuantity({
+                                                quantity : -1,
+                                                id: sp.id,
+                                            })
+                                        }}
+                                        className='btn btn-success'>-</button>
                                     </td>
                                     <td>{sp.soLuong * sp.price}$</td>
                                     <td>
-                                        <button className='btn btn-danger'>Xóa</button>
+                                        <button 
+                                        onClick={()=>{
+                                            deleteSP();
+                                        }}
+                                        className='btn btn-danger'>Xóa</button>
                                     </td>
                                 </tr>
                                 )
